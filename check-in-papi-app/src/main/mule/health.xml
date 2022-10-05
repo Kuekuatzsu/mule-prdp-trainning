@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<import doc:name="Import" doc:id="412038dc-bf03-4e00-b30c-c5b58b887ebc" file="health-common.xml" />
+	<flow name="check-all-dependencies-are-alive" doc:id="75767a4a-fcf3-422a-b765-5c5b1da0b6fe" >
+		<logger level="INFO" doc:name="Logger" doc:id="35b6b6aa-fb12-4935-a90c-a39aa1eb3f6b" message="OK"/>
+	</flow>
+</mule>

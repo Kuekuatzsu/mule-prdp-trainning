@@ -14,7 +14,9 @@
 
 	<name>check-in-papi-app</name>
 
-	<properties/>
+	<properties>
+		<munit.version>2.3.11</munit.version>
+	</properties>
 
 	<build>
 		<plugins>
@@ -25,6 +27,37 @@
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+							<goal>coverage-report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<runtimeVersion>4.4.0-20220420</runtimeVersion>
+                    <runtimeProduct>MULE_EE</runtimeProduct>
+					<coverage>
+						<runCoverage>true</runCoverage>
+						<formats>
+							<format>html</format>
+							<format>json</format>
+							<format>console</format>
+							<format>sonar</format>
+						</formats>
+						<ignoreFiles>
+					       <ignoreFile>health-common.xml</ignoreFile>
+					   </ignoreFiles>
+					</coverage>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -77,6 +110,32 @@
 			<artifactId>mule-tracing-module</artifactId>
 			<version>1.0.0</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>9a17c455-f066-43aa-9ca2-92d5398aeeff</groupId>
+			<artifactId>apps-commons</artifactId>
+			<version>1.0.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>2.3.11</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>2.3.11</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.weave</groupId>
+			<artifactId>assertions</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<repositories>

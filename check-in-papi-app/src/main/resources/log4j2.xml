@@ -23,6 +23,10 @@
             index="main" sourcetype="log4j" disableCertificateValidation="true">
             <PatternLayout pattern="%-5p %d [%t] [%MDC] %c: %m%n" />
         </SplunkHttp>
+        
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %d [%t] [%MDC] %c: %m%n" />
+        </Console>
     </Appenders>
 
     <Loggers>

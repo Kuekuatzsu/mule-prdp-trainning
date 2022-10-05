@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-test-suite.xml" />
+	<munit:test name="implementation-test-suite-check-in-by-pnrTest" doc:id="09cddc4b-28be-492c-8f79-70dbb5d5e296" description="Test">
+		<munit:behavior >
+			<munit:set-event doc:name="Set Event" doc:id="db81a777-6c05-4031-ab5e-2627fbe6c90f" >
+				<munit:payload value='#[{  "lastName": "Smith",  "numBags": 2}]' />
+				<munit:attributes value='#[{  "uriParams": {    "PNR" : "ABC123" } }]' />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to check-in-by-pnr" doc:id="9e6a2671-a750-424b-8742-d8d95a902d23" name="check-in-by-pnr"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="da9e7611-a266-4944-8b6f-e0f4f792d1f4" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="successful-checkin-without-baggage" doc:id="b026f493-184f-4c1a-95eb-96d7c8657886" >
+		<munit:behavior>
+			<munit:set-event doc:name="Set Event" doc:id="b0ae976e-b6d0-48d3-b43f-e4cd015e35c5" >
+				<munit:payload value="#[readUrl('classpath://checkin/test/checkin-payload.json')]" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://checkin/test/checkin-attributes.json')]" mediaType="application/json" />
+			</munit:set-event>
+			<munit-tools:spy doc:name="Spy" doc:id="44dac1b7-8dba-4f9d-9d88-a5444dea2c9b" processor="tracing:set-logging-variable">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="1cf7f455-e0b0-4a73-ae16-053e7fd64f1a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert-equals doc:name="Assert no baggage" doc:id="63c498fb-f9a7-4c1e-a3f1-0718eddeb7d1" actual="#[payload.numBags]" expected="#[0]" />
+				</munit-tools:before-call>
+			</munit-tools:spy>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to check-in-by-pnr" doc:id="5b0314c7-4ce9-461f-bfe9-e8ce3c003fc2" name="check-in-by-pnr" />
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert paymentID" doc:id="06363c39-fef7-44f6-881a-83435d12edbf" actual="#[payload.paymentID]" expected='#["PAY-1AKD7482FAB9STATKO"]'/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

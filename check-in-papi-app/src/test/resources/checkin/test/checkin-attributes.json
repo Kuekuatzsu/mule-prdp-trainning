@@ -1,0 +1,31 @@
+{
+  "headers": {
+    "x-correlation-id": "andresc-uuid-88",
+    "content-type": "application/json",
+    "user-agent": "PostmanRuntime/7.29.2",
+    "accept": "*/*",
+    "postman-token": "3e97dfdf-0f08-4e44-b6a9-9af311a5c2da",
+    "host": "localhost:8082",
+    "accept-encoding": "gzip, deflate, br",
+    "connection": "keep-alive",
+    "content-length": "43"
+  },
+  "clientCertificate": null,
+  "method": "PUT",
+  "scheme": "https",
+  "queryParams": {},
+  "requestUri": "/api/v1/tickets/ABC999/checkin",
+  "queryString": "",
+  "version": "HTTP/1.1",
+  "maskedRequestPath": "/tickets/ABC999/checkin",
+  "listenerPath": "/api/v1/*",
+  "relativePath": "/api/v1/tickets/ABC999/checkin",
+  "localAddress": "/127.0.0.1:8082",
+  "uriParams": {
+    "PNR": "ABC999"
+  },
+  "rawRequestUri": "/api/v1/tickets/ABC999/checkin",
+  "rawRequestPath": "/api/v1/tickets/ABC999/checkin",
+  "remoteAddress": "/127.0.0.1:62811",
+  "requestPath": "/api/v1/tickets/ABC999/checkin"
+}
