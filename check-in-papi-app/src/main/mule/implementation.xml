@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+<mule xmlns:tracing="http://www.mulesoft.org/schema/mule/tracing" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tracing http://www.mulesoft.org/schema/mule/tracing/current/mule-tracing.xsd">
 	<sub-flow name="payment-approval-by-pnr" doc:id="524af5a6-6cf3-4b0a-aa6f-f56bb4aa0793" >
 		<ee:transform>
             <ee:variables>
@@ -33,6 +34,7 @@ output application/json
         </ee:transform>
 	</sub-flow>
 	<flow name="check-in-by-pnr" doc:id="f3636d77-7c2b-4f38-9573-31b0c4e7817e" >
+		<tracing:set-logging-variable doc:name="passenger" doc:id="1cf7f455-e0b0-4a73-ae16-053e7fd64f1a" variableName="passenger" value="#[payload.lastName]"/>
 		<ee:transform>
             <ee:variables>
                 <ee:set-variable variableName="PNR">attributes.uriParams.'PNR'</ee:set-variable>
@@ -48,5 +50,6 @@ output application/json
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="7614d120-ba84-4fb9-8de5-561172d37328" message='#["check-in-done, requires payment with ID" ++ payload.paymentID]'/>
 	</flow>
 </mule>
